@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// Read a file and append each row to a slice. Return that slice. Found the code online, looks fancy.
 func ReadInputFile(filename string) []string {
 	var output = []string{}
 	file, err := os.Open(filename)
@@ -15,7 +16,6 @@ func ReadInputFile(filename string) []string {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	// optionally, resize scanner's capacity for lines over 64K, see next example
 	for scanner.Scan() {
 		output = append(output, scanner.Text())
 	}

@@ -19,3 +19,6 @@
 
 # Go workspace file
 go.work
+
+# I save the input files with the AOC extension. For license reasons they should not be pushed
+*.aoc

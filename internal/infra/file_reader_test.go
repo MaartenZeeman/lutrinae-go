@@ -17,7 +17,7 @@ func TestReadInputFileSub(t *testing.T) {
 	t.Run("Input contents", func(t *testing.T) {
 		for index, item := range input {
 			if item != shouldBe[index] {
-				t.Error(fmt.Sprintf("Incorrect input value. Expected '%s', found '%s'", shouldBe[index], item))
+				t.Error(fmt.Sprintf("Incorrect input value. Expected '%s', got '%s'", shouldBe[index], item))
 			}
 		}
 	})
