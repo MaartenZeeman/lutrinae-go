@@ -39,22 +39,23 @@ func SolveTwoTwo(input []string) int {
 
 	for _, item := range input {
 		_, draws := splitInput(item)
-		highestPerColor := map[string]int{}
+		// a map to keep track of the highest amount of cubes we have of a color in 1 round
+		maxPerColor := map[string]int{}
 		for _, draw := range draws {
 			colorMap := getColorMap(draw)
-			// Loop through the map with maximum number of cubes per color.
-			// If the draw exceeds any of them, set isPossible to false and break the loop
+			// Replace the number in maxPerColor if the current amount of cubes for the specific color is higher.
 			for key, value := range colorMap {
-				if value > highestPerColor[key] {
-					highestPerColor[key] = value
+				if value > maxPerColor[key] {
+					maxPerColor[key] = value
 				}
 			}
 		}
+		// drawPower sounds cool. Keep multiplying with the next color
 		drawPower := 1
-		for _, value := range highestPerColor {
-			drawPower = drawPower * value
+		for _, value := range maxPerColor {
+			drawPower *= value
 		}
-		sum = sum + drawPower
+		sum += drawPower
 	}
 
 	return sum
