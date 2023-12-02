@@ -7,12 +7,23 @@ import (
 )
 
 func main() {
+	printDayOneResults()
+	printDayTwoResults()
+}
+
+func printDayOneResults() {
+	var input = infra.ReadInputFile("./input/1.aoc")
+	fmt.Printf("Result of 1-1 = %d \n", puzzles.SolveOneOne(input))
+	fmt.Printf("Result of 1-2 = %d \n", puzzles.SolveOneTwo(input))
+}
+
+func printDayTwoResults() {
 	var input = infra.ReadInputFile("./input/2.aoc")
 	maxAllowed := map[string]int{
 		"red":   12,
 		"green": 13,
 		"blue":  14,
 	}
-	var result = puzzles.SolveTwoOne(input, maxAllowed)
-	fmt.Println(result)
+	fmt.Printf("Result of 2-1 = %d \n", puzzles.SolveTwoOne(input, maxAllowed))
+	fmt.Printf("Result of 2-2 = %d \n", puzzles.SolveTwoTwo(input))
 }
