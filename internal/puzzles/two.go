@@ -68,7 +68,8 @@ func splitInput(input string) (int, []string) {
 	if len(inputSplit) != 2 {
 		return 0, []string{}
 	}
-	// We can use a regex like yesterday or remove the word 'game', but using a substring is more fun
+
+	// We can use a regex like yesterday, split on whitespace or remove the word 'game', but using a substring is more fun and has magic numbers
 	gameID, _ := strconv.Atoi(inputSplit[0][5:len(inputSplit[0])])
 	// Next, split the other part, the actual input, on the semicolon.
 	// Each of the resulting items is one handful of cubes (or whatever they are called in the description)
@@ -81,8 +82,6 @@ func getColorMap(draw string) map[string]int {
 	// More splitting, now on the comma to get the different colors and quantities
 	colors := strings.Split(draw, ",")
 	// We are going to put the colors and number of cubes in a map.
-	// The easier and probably faster way is to split on the keys in the maxAllowed input and get the number in front of it,
-	// but I want to mess with maps a bit more
 	var colorMap map[string]int
 	colorMap = make(map[string]int)
 	for _, color := range colors {
