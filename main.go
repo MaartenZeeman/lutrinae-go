@@ -7,7 +7,12 @@ import (
 )
 
 func main() {
-	var input = infra.ReadInputFile("./input/1.aoc")
-	var result = puzzles.SolveSecond(input)
+	var input = infra.ReadInputFile("./input/2.aoc")
+	maxAllowed := map[string]int{
+		"red":   12,
+		"green": 13,
+		"blue":  14,
+	}
+	var result = puzzles.SolveTwoOne(input, maxAllowed)
 	fmt.Println(result)
 }

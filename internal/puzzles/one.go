@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func SolveFirst(input []string) int {
+func SolveOneOne(input []string) int {
 	var sum = 0
 	// Loop through input slice and add the result of each row (item) to 'sum'
 	for _, item := range input {
@@ -17,7 +17,7 @@ func SolveFirst(input []string) int {
 	return sum
 }
 
-func SolveSecond(input []string) int {
+func SolveOneTwo(input []string) int {
 	var sum = 0
 	// SolveFirst with extra steps
 	for _, item := range input {
