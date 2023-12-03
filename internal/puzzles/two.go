@@ -9,19 +9,19 @@ func SolveTwoOne(input []string, maxAllowed map[string]int) int {
 	var sum = 0
 
 	for _, item := range input {
-		gameID, draws := splitInput(item)
+		gameID, hands := splitInput(item)
 		isPossible := true
-		for _, draw := range draws {
-			colorMap := getColorMap(draw)
+		for _, hand := range hands {
+			colorMap := getColorMap(hand)
 			// Loop through the map with maximum number of cubes per color.
-			// If the draw exceeds any of them, set isPossible to false and break the loop
+			// If the hand exceeds any of them, set isPossible to false and break the loop
 			for key, value := range maxAllowed {
 				if colorMap[key] > value {
 					isPossible = false
 					break
 				}
 			}
-			// No need to check the next draw if the previous one was impossible
+			// No need to check the next hand if the previous one was impossible
 			if !isPossible {
 				break
 			}
@@ -38,11 +38,11 @@ func SolveTwoTwo(input []string) int {
 	var sum = 0
 
 	for _, item := range input {
-		_, draws := splitInput(item)
+		_, hands := splitInput(item)
 		// a map to keep track of the highest amount of cubes we have of a color in 1 round
 		maxPerColor := map[string]int{}
-		for _, draw := range draws {
-			colorMap := getColorMap(draw)
+		for _, hand := range hands {
+			colorMap := getColorMap(hand)
 			// Replace the number in maxPerColor if the current amount of cubes for the specific color is higher.
 			for key, value := range colorMap {
 				if value > maxPerColor[key] {
@@ -50,12 +50,12 @@ func SolveTwoTwo(input []string) int {
 				}
 			}
 		}
-		// drawPower sounds cool. Keep multiplying with the next color
-		drawPower := 1
+		// handPower sounds cool. Keep multiplying with the next color
+		handPower := 1
 		for _, value := range maxPerColor {
-			drawPower *= value
+			handPower *= value
 		}
-		sum += drawPower
+		sum += handPower
 	}
 
 	return sum
@@ -73,14 +73,14 @@ func splitInput(input string) (int, []string) {
 	gameID, _ := strconv.Atoi(inputSplit[0][5:len(inputSplit[0])])
 	// Next, split the other part, the actual input, on the semicolon.
 	// Each of the resulting items is one handful of cubes (or whatever they are called in the description)
-	draws := strings.Split(inputSplit[1], ";")
+	hands := strings.Split(inputSplit[1], ";")
 
-	return gameID, draws
+	return gameID, hands
 }
 
-func getColorMap(draw string) map[string]int {
+func getColorMap(hand string) map[string]int {
 	// More splitting, now on the comma to get the different colors and quantities
-	colors := strings.Split(draw, ",")
+	colors := strings.Split(hand, ",")
 	// We are going to put the colors and number of cubes in a map.
 	var colorMap map[string]int
 	colorMap = make(map[string]int)

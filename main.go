@@ -7,8 +7,7 @@ import (
 )
 
 func main() {
-	printDayOneResults()
-	printDayTwoResults()
+	printDayThreeResults()
 }
 
 func printDayOneResults() {
@@ -26,4 +25,10 @@ func printDayTwoResults() {
 	}
 	fmt.Printf("Result of 2-1 = %d \n", puzzles.SolveTwoOne(input, maxAllowed))
 	fmt.Printf("Result of 2-2 = %d \n", puzzles.SolveTwoTwo(input))
+}
+
+func printDayThreeResults() {
+	var input = infra.ReadInputFile("./input/3.aoc")
+	fmt.Printf("Result of 3-1 = %d \n", puzzles.SolveThreeOne(input))
+	fmt.Printf("Result of 3-2 = %d \n", puzzles.SolveThreeTwo(input))
 }
