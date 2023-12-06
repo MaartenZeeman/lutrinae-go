@@ -22,13 +22,10 @@ func (almanac *almanac) getCorrespondingNumber(number int64) int64 {
 }
 
 var seeds = []int64{}
-var seedsToSoil = []almanac{}
-var soilToFertilizer = []almanac{}
-var fertilizerToWater = []almanac{}
-var waterToLight = []almanac{}
-var lightToTemperature = []almanac{}
-var temperatureToHumidity = []almanac{}
-var humidityToLocation = []almanac{}
+var charts = map[string][]almanac{}
+var chartsFromTo = map[string]string{}
+
+const INITIAL_TYPE = "seed"
 
 func SolveFiveOne(input []string) int64 {
 	readInput(input)
@@ -43,7 +40,7 @@ func SolveFiveTwo(input []string) int64 {
 }
 
 func readInput(input []string) {
-	var currentMap *[]almanac = &seedsToSoil
+	var currentType string
 	for _, line := range input {
 		if strings.HasPrefix(line, "seeds:") {
 			seeds = []int64{}
@@ -59,32 +56,15 @@ func readInput(input []string) {
 			var to, from, amount int64
 			fmt.Sscanf(line, "%d %d %d", &to, &from, &amount)
 
-			*currentMap = append(*currentMap, almanac{from, to, amount})
+			charts[currentType] = append(charts[currentType], almanac{from, to, amount})
 		} else if strings.HasSuffix(line, "map:") {
-			switch line {
-			case "seed-to-soil map:":
-				currentMap = &seedsToSoil
-				break
-			case "soil-to-fertilizer map:":
-				currentMap = &soilToFertilizer
-				break
-			case "fertilizer-to-water map:":
-				currentMap = &fertilizerToWater
-				break
-			case "water-to-light map:":
-				currentMap = &waterToLight
-				break
-			case "light-to-temperature map:":
-				currentMap = &lightToTemperature
-				break
-			case "temperature-to-humidity map:":
-				currentMap = &temperatureToHumidity
-				break
-			case "humidity-to-location map:":
-				currentMap = &humidityToLocation
-				break
-			}
-			*currentMap = []almanac{}
+			lineMagic := strings.Split(strings.Replace(strings.TrimSpace(line), "-", " ", -1), " ")
+			typeFrom := lineMagic[0]
+			typeTo := lineMagic[2]
+
+			currentType = typeFrom
+			chartsFromTo[typeFrom] = typeTo
+			charts[typeFrom] = []almanac{}
 		}
 
 	}
@@ -125,51 +105,18 @@ func getLowestSeedNumberOnSteroids() int64 {
 // loopception. Loop through the loops until we no longer know what the loop is going on
 func testSeed(seed int64) int64 {
 	nextNumber := seed
-	for _, sts := range seedsToSoil {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
-		}
-	}
+	currentType := INITIAL_TYPE
 
-	for _, sts := range soilToFertilizer {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
+	for true {
+		for _, chart := range charts[currentType] {
+			if chart.contains(nextNumber) {
+				nextNumber = chart.getCorrespondingNumber(nextNumber)
+				break
+			}
 		}
-	}
+		currentType = chartsFromTo[currentType]
 
-	for _, sts := range fertilizerToWater {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
-		}
-	}
-
-	for _, sts := range waterToLight {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
-		}
-	}
-
-	for _, sts := range lightToTemperature {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
-		}
-	}
-
-	for _, sts := range temperatureToHumidity {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
-			break
-		}
-	}
-
-	for _, sts := range humidityToLocation {
-		if sts.contains(nextNumber) {
-			nextNumber = sts.getCorrespondingNumber(nextNumber)
+		if currentType == "" {
 			break
 		}
 	}
