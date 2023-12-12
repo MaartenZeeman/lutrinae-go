@@ -60,4 +60,5 @@ func printDaySevenResults() {
 func printDayEightResults() {
 	var input = infra.ReadInputFile("./input/8.aoc")
 	fmt.Printf("Result of 8-1 = %d \n", puzzles.SolveEightOne(input))
+	fmt.Printf("Result of 8-2 = %d \n", puzzles.SolveEightTwo(input))
 }
